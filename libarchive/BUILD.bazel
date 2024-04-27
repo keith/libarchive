@@ -1,0 +1,56 @@
+PUBLIC_HEADERS = [
+    "archive.h",
+    "archive_entry.h",
+]
+
+WINDOWS_SRCS = glob(["*_windows.*"]) + ["archive_entry_copy_bhfi.c"]
+
+cc_library(
+    name = "libarchive",
+    srcs = glob(
+        [
+            "*.c",
+            "*.h",
+        ],
+        exclude = PUBLIC_HEADERS + WINDOWS_SRCS + [
+            "archive_disk_acl_*.c",
+        ],
+    ) + select({
+        "@platforms//os:windows": WINDOWS_SRCS,
+        "@platforms//os:macos": ["archive_disk_acl_darwin.c"],
+        "@platforms//os:linux": ["archive_disk_acl_linux.c"],
+        "//conditions:default": [],
+    }),
+    hdrs = PUBLIC_HEADERS,
+    local_defines = [
+        "HAVE_CONFIG_H",
+        # ZLIB support
+        "HAVE_ZLIB_H",
+        # ZSTD support
+        "HAVE_ZSTD_H",
+        "HAVE_LIBZSTD",
+        "HAVE_LIBZSTD_COMPRESSOR",
+        # LZMA support
+        "HAVE_LIBLZMA",
+        "HAVE_LZMA_H",
+        "HAVE_LZMA_STREAM_ENCODER_MT",
+        # BZIP2 support
+        "HAVE_LIBBZ2",
+        "HAVE_BZLIB_H",
+        # LZ4 support
+        "HAVE_LIBLZ4",
+        "HAVE_LZ4_H",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:config_h",
+        "@bzip2//:bz2",
+        "@lz4",
+        "@xz//:lzma",
+        "@zlib",
+        "@zstd",
+    ] + select({
+        "//:use_mbedtls_setting": ["@mbedtls"],
+        "//conditions:default": [],
+    }),
+)

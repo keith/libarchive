@@ -115,7 +115,7 @@
 #define __LA_NORETURN       __attribute__((__noreturn__))
 #elif defined(_MSC_VER)
 #define __LA_NORETURN __declspec(noreturn)
-#else 
+#else
 #define __LA_NORETURN
 #endif
 
