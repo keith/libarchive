@@ -37,7 +37,7 @@
 #include <string.h>
 #endif
 #ifdef HAVE_BZLIB_H
-#include <bzlib.h>
+#include "bzlib.h"
 #endif
 
 #include "archive.h"
