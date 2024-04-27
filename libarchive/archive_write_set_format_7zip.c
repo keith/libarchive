@@ -30,7 +30,7 @@
 #endif
 #include <stdlib.h>
 #ifdef HAVE_BZLIB_H
-#include "bzlib.h"
+#include <bzlib.h>
 #endif
 #if HAVE_LZMA_H
 #include <lzma.h>
