@@ -48,7 +48,6 @@ build/tar/test/list.h
 build/unzip/test/list.h
 cat/test/list.h
 config.cache
-config.h
 config.h.in
 config.log
 config.status
@@ -92,5 +91,6 @@ test-suite.log
 
 .sw?
 .*.sw?
-
 *.pdb
+bazel-*
+MODULE.bazel.lock
